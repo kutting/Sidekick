@@ -1,0 +1,15 @@
+.titlebar {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: flex-end;
+
+	border-bottom: solid 1px #bbb;
+	margin-bottom: 1rem;
+	padding-bottom: 0.5rem;
+
+	.titlebar-title {
+		font-size: 150%;
+		font-weight: normal;
+	}
+}

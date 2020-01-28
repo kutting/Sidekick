@@ -1,0 +1,49 @@
+div.button-with-icon {
+  display: inline-block;
+  border: 1px solid #666;
+  border-radius: 5px;
+  margin-left: 0.5rem;
+
+  // color modifiers
+  &.normal {
+	  background-color: #e0e1e2;
+    color: black;
+  }
+  &.primary {
+    background-color: rgb(33, 186, 69);
+    color: white;
+  }
+  &.secondary {
+    background-color: rgb(242, 113, 28);
+    color: white;
+  }
+  &:hover div {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+  &:active div {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  div.inner {
+    height: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  div.button {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    outline: none;
+    padding: 0.25rem 1.5rem;
+  }
+
+  mat-icon {
+    border-left: 2px solid rgba(0, 0, 0, 0.05);
+  }
+}

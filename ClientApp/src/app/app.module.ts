@@ -4,10 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MaterialModule } from './material.module';
+import { UIComponentsModule } from './ui-components/ui-components.module';
 import { AppRoutingModule } from './app-routing.module';
 
 // The app page components
@@ -20,14 +19,13 @@ import { VendorsModule } from './vendors/vendors.module';
 @NgModule({
 	declarations: [
 		AppComponent,
-		NavMenuComponent,
 		FetchDataComponent,
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
 		HttpClientModule,
 		FormsModule,
-		MaterialModule,
+		UIComponentsModule,
 		ComicsModule,
 		VendorsModule,
 		BrowserAnimationsModule,

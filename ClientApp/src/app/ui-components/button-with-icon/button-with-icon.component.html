@@ -1,0 +1,8 @@
+<div class="button-with-icon noselect {{buttonStyle}}" [ngClass]="{'normal': !buttonStyle}">
+	<div class="inner">
+		<div class="button">
+			<ng-content></ng-content>
+		</div>
+		<mat-icon *ngIf="icon" class="icon">{{icon}}</mat-icon>
+	</div>
+</div>

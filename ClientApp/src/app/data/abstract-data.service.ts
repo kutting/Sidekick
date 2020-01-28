@@ -10,11 +10,11 @@ import { catchError, retry } from 'rxjs/operators';
   providedIn: 'root'
 })
 export abstract class AbstractDataService {
-	protected baseUrl = '';		// base URL for the instances calls to the Event Manager API, e.g., api/comics
+	protected baseUrl = '';		// base URL for the instances calls to the API, e.g., api/comics
 
 	protected httpOptions = {
 		headers: new HttpHeaders({
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
 		})
 	};
 

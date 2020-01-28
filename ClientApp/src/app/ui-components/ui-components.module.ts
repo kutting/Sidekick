@@ -3,7 +3,10 @@
 // Import all Material Modules needed by app
 ///////////////////////////////////////////////////////////////////////////////////////
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 import {
 	MatAutocompleteModule,
 	MatButtonModule,
@@ -29,10 +32,29 @@ import {
 } from '@angular/material';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
+// Immaterial Components
+import { SliderComponent } from './slider.component';
+import { ButtonWithIconComponent } from './button-with-icon/button-with-icon.component';
+import { GridMessagebarComponent } from './grid-messagebar/grid-messagebar.component';
+import { GridTitlebarComponent } from './grid-titlebar/grid-titlebar.component';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { TitlebarComponent } from './titlebar/titlebar.component';
+
 @NgModule({
-	declarations: [],
+	declarations: [
+		SliderComponent,
+		ButtonWithIconComponent,
+		/*
+		GridMessagebarComponent,
+		GridTitlebarComponent,
+		*/
+		NavMenuComponent,
+		TitlebarComponent,
+	],
 	imports: [
 		CommonModule,
+		FormsModule,
+		RouterModule,
 		MatAutocompleteModule,
 		MatButtonModule,
 		MatCardModule,
@@ -54,7 +76,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 		MatDialogModule,
 		MatInputModule,
 		MatSelectModule,
-		MatSlideToggleModule,],
+		MatSlideToggleModule,
+	],
 	exports: [
 		MatAutocompleteModule,
 		MatButtonModule,
@@ -78,6 +101,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 		MatInputModule,
 		MatSelectModule,
 		MatSlideToggleModule,
+		SliderComponent,
+		ButtonWithIconComponent,
+		NavMenuComponent,
+		TitlebarComponent,
 	]
 })
-export class MaterialModule { }
+export class UIComponentsModule { }
