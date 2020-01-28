@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Sidekick_II.Controllers
+namespace Sidekick.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
@@ -16,7 +16,9 @@ namespace Sidekick_II.Controllers
 			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 		};
 
+#pragma warning disable IDE0052 // Remove unread private members
 		private readonly ILogger<WeatherForecastController> _logger;
+#pragma warning restore IDE0052 // Remove unread private members
 
 		public WeatherForecastController(ILogger<WeatherForecastController> logger)
 		{

@@ -1,6 +1,6 @@
 using System;
 
-namespace Sidekick_II
+namespace Sidekick
 {
 	public class WeatherForecast
 	{

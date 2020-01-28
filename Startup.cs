@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Sidekick.Models;
 
-namespace Sidekick_II
+namespace Sidekick
 {
 	public class Startup
 	{
@@ -20,6 +22,8 @@ namespace Sidekick_II
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddDbContext<SidekickContext>(opt =>
+				opt.UseSqlServer(this.Configuration.GetConnectionString("SidekickConnection")));
 			services.AddControllersWithViews();
 			// In production, the Angular files will be served from this directory
 			services.AddSpaStaticFiles(configuration =>
