@@ -5,7 +5,7 @@ import { AbstractDataService } from './abstract-data.service';
 
 // Controller-related Data Types
 export interface Vendor {
-	id: number;
+	vendorId: number;
 	name: string;
 	phoneNumber: string;
 	websiteURL: string;
@@ -25,9 +25,27 @@ export class VendorsService extends AbstractDataService {
 		this.baseUrl = 'api/Vendors';
 	}
 
+	// Get all the vendors, for example to display in the vendor grid
+	// GET: api/Vendors
+	public allVendors(withStates: boolean, searchFilters: any = null): Observable<Vendor[]> {
+		return this.getWithParams(withStates ? 'withStates' : '', searchFilters);
+	}
+
+	// Get a specific vendor by Id
+    // GET: api/Vendors/5
+	public getVendor(vendorId: number): Observable<Vendor> {
+		return this.get<Vendor>(vendorId.toString());
+	}
+
 	// Create a new vendor
 	// POST: api/Vendors
 	public create(newVendor: Vendor): Observable<Vendor> {
 		return this.post<Vendor>('', newVendor);
+	}
+
+	// Update existing vendor
+    // PUT: api/Vendors/5
+	public update(vendor: Vendor): Observable<Vendor> {
+		return this.put<Vendor>(vendor.vendorId.toString(), vendor);
 	}
 }

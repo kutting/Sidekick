@@ -3,9 +3,12 @@
 			  https://codinglatte.com/posts/angular/responsive-app-angular-flex-layout/
 -->
 
+<!-- Titlebar -->
 <app-titlebar title="Vendors">
 	<app-button-with-icon buttonStyle="primary" icon="add" (click)="createVendor()">Create Vendor</app-button-with-icon>
 </app-titlebar>
+
+<!-- Filters -->
 <form [formGroup]="formGroup" style="background-color: #ededed; padding: 0.75rem" ngClass.xs="smalltext">
 	<!-- fxLayout="row|column|row-reverse|column-reverse|row-wrap"-->
 	<!-- fxLayoutAlign="start|center|end|space-around|space-between start|center|end|space-around|space-between" // mainAxis crossAxis-->
@@ -91,17 +94,10 @@
 	</div>
 
 	<!-- New Row -->
-	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutAlign.lt-sm="center start"
-			fxLayoutGap="10px">
+	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutAlign.lt-sm="center start">
 		<div fxFlex="32">
 			<mat-form-field class="example-full-width">
-				<input type="text" placeholder="Search by Location" aria-label="Number" matInput
-						formControlName="locationFilter" [matAutocomplete]="auto">
-				<mat-autocomplete #auto="matAutocomplete">
-					<mat-option *ngFor="let option of filteredLocationOptions | async" [value]="option">
-						{{option}}
-					</mat-option>
-				</mat-autocomplete>
+				<input type="text" placeholder="Search by Name" matInput formControlName="searchName">
 			</mat-form-field>
 		</div>
 		<div fxFlex="32">
@@ -128,3 +124,46 @@
 		</div>
 	</div>
 </form>
+
+<!-- spacer -->
+<hr />
+
+<!-- Grid -->
+<div class="datagrid">
+	<table mat-table matSort [dataSource]="dataSource">
+		<!--- Note that these columns can be defined in any order.
+		  The actual rendered columns are set as a property on the row definition" -->
+
+		<ng-container matColumnDef="name">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+			<td mat-cell *matCellDef="let vendor"> {{vendor.name}} </td>
+		</ng-container>
+		<ng-container matColumnDef="city">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> City </th>
+			<td mat-cell *matCellDef="let vendor"> {{vendor.city}} </td>
+		</ng-container>
+		<ng-container matColumnDef="phone">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+			<td mat-cell *matCellDef="let vendor"> {{vendor.phoneNumber | phone}} </td>
+		</ng-container>
+		<ng-container matColumnDef="state">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+			<td mat-cell *matCellDef="let vendor"> {{vendor.stateCode ? vendor.stateCode.abbreviation : ''}} </td>
+		</ng-container>
+
+		<!-- Actions Column -->
+		<ng-container matColumnDef="actions">
+			<th mat-header-cell *matHeaderCellDef style="text-align: right">Actions</th>
+			<td mat-cell *matCellDef="let gridItem" class="cell-actions">
+				<mat-icon (click)="delete(gridItem.vendorId)" title="Delete" class="cell-action-delete">
+					delete
+				</mat-icon>
+				<mat-icon (click)="edit(gridItem.vendorId)" title="Edit">edit</mat-icon>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+	</table>
+	<mat-paginator [pageSizeOptions]="[20, 50, 100, 300]" showFirstLastButtons></mat-paginator>
+</div>

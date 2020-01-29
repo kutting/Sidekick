@@ -30,13 +30,12 @@ import {
 	MatTableModule,
 	MatToolbarModule,
 } from '@angular/material';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 // Immaterial Components
 import { SliderComponent } from './slider.component';
 import { ButtonWithIconComponent } from './button-with-icon/button-with-icon.component';
-import { GridMessagebarComponent } from './grid-messagebar/grid-messagebar.component';
-import { GridTitlebarComponent } from './grid-titlebar/grid-titlebar.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 
@@ -67,6 +66,7 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
 		MatMenuModule,
 		MatNativeDateModule,
 		MatOptionModule,
+		MatPaginatorModule,
 		MatProgressBarModule,
 		MatRadioModule,
 		MatSidenavModule,
@@ -99,6 +99,7 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
 		MatTableModule,
 		MatDialogModule,
 		MatInputModule,
+		MatPaginatorModule,
 		MatSelectModule,
 		MatSlideToggleModule,
 		SliderComponent,

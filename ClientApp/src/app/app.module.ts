@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UIComponentsModule } from './ui-components/ui-components.module';
 import { AppRoutingModule } from './app-routing.module';
 
+//import { PhonePipe } from './ui-components/pipe-phone/pipe-phone.pipe';
+
 // The app page components
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 
@@ -20,6 +22,7 @@ import { VendorsModule } from './vendors/vendors.module';
 	declarations: [
 		AppComponent,
 		FetchDataComponent,
+		//PhonePipe,
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

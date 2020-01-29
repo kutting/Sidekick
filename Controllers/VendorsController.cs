@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Sidekick.Models;
+using Sidekick.Queries;
 
 namespace Sidekick.Controllers
 {
@@ -20,11 +22,31 @@ namespace Sidekick.Controllers
             _context = context;
         }
 
+        // Get all vendors, without state code sub-objects
         // GET: api/Vendors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Vendor>>> GetVendors()
         {
-            return await _context.Vendors.ToListAsync();
+            var result = await _context.Vendors.ToListAsync();
+            return result;
+        }
+
+        // Search vendors
+        // This method includes the vendor's statecode object in the delivered data
+        // GET: api/Vendors/withStates?{query}
+        [HttpGet("withStates")]
+        public async Task<ActionResult<IEnumerable<Vendor>>> GetVendorsWithStates([FromQuery] SearchVendors query)
+        {
+            var vendors = from vendor in _context.Vendors select vendor;
+            if (query != null)
+            {
+                vendors = from vendor in vendors
+                          where
+                            string.IsNullOrEmpty(query.SearchName) || EF.Functions.Like(vendor.Name, "%" + query.SearchName + "%") //vendor.Name == query.SearchName //vendor.Name.Contains(query.SearchName, StringComparison.OrdinalIgnoreCase)
+                          select vendor;
+            }
+            var result = vendors.AsNoTracking().Include(sc => sc.StateCode).ToListAsync();
+            return await result;
         }
 
         // GET: api/Vendors/5
@@ -47,7 +69,7 @@ namespace Sidekick.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutVendor(long id, Vendor vendor)
         {
-            if (id != vendor.Id)
+            if (id != vendor.VendorId)
             {
                 return BadRequest();
             }
@@ -82,7 +104,7 @@ namespace Sidekick.Controllers
             _context.Vendors.Add(vendor);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetVendor", new { id = vendor.Id }, vendor);
+            return CreatedAtAction("GetVendor", new { id = vendor.VendorId }, vendor);
         }
 
         // DELETE: api/Vendors/5
@@ -103,7 +125,7 @@ namespace Sidekick.Controllers
 
         private bool VendorExists(long id)
         {
-            return _context.Vendors.Any(e => e.Id == id);
+            return _context.Vendors.Any(e => e.VendorId == id);
         }
     }
 }

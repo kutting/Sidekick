@@ -17,3 +17,42 @@ code {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// Fix appearance of table headers
+table.mat-table {
+	tr.mat-header-row {
+		height: 2.25rem;
+		background-color: rgba(0, 0, 0, 0.045);
+
+		th.mat-header-cell {
+			font-size: 90%;
+			font-weight: bold;
+		}
+	}
+
+	tr.mat-row {
+		height: 1.75rem;
+
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.035);
+
+			td.cell-actions .mat-icon {
+				display: block;
+				float: right;
+				font-size: 20px;
+				color: rgba(10, 10, 10, 0.5);
+
+				&.cell-action-delete {
+					color: #db2828;
+				}
+			}
+		}
+	}
+
+	td.cell-actions {
+		.mat-icon {
+			display: none;
+			cursor: pointer;
+		}
+	}
+}

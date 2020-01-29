@@ -47,7 +47,7 @@ namespace Sidekick.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutComic(long id, Comic comic)
         {
-            if (id != comic.Id)
+            if (id != comic.ComicId)
             {
                 return BadRequest();
             }
@@ -82,7 +82,7 @@ namespace Sidekick.Controllers
             _context.Comics.Add(comic);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetComic", new { id = comic.Id }, comic);
+            return CreatedAtAction("GetComic", new { id = comic.ComicId }, comic);
         }
 
         // DELETE: api/Comics/5
@@ -103,7 +103,7 @@ namespace Sidekick.Controllers
 
         private bool ComicExists(long id)
         {
-            return _context.Comics.Any(e => e.Id == id);
+            return _context.Comics.Any(e => e.ComicId == id);
         }
     }
 }

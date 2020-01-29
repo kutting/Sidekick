@@ -4,7 +4,7 @@ namespace Sidekick.Models
 {
     public class Vendor
     {
-        public long Id { get; set; }
+        public long VendorId { get; set; }
         [MaxLength(500)]
         public string Name { get; set; }
         [MaxLength(50)]
@@ -17,10 +17,16 @@ namespace Sidekick.Models
         public string Address2 { get; set; }
         [MaxLength(250)]
         public string City { get; set; }
-        public long StateId { get; set; }
+        public long? StateCodeId { get; set; }
         [MaxLength(25)]
         public string ZipCode { get; set; }
         [MaxLength(250)]
         public string EmailAddress { get; set; }
+
+        // Foreign Key to StateCode
+        public StateCode StateCode { get; set; }
+
+        // Foreign Key from Comic
+        public Comic Comic { get; set; }
     }
 }

@@ -24,18 +24,38 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\vendors\add\**" />
+    <Compile Remove="ClientApp\src\app\vendors\forms\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\vendors\add\**" />
+    <Content Remove="ClientApp\src\app\vendors\forms\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\vendors\add\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\vendors\forms\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\vendors\add\**" />
+    <None Remove="ClientApp\src\app\vendors\forms\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\vendors\add\add.component.html" />
+    <None Remove="ClientApp\src\app\vendors\add\add.component.scss" />
+    <None Remove="ClientApp\src\app\vendors\add\add.component.spec.ts" />
+    <None Remove="ClientApp\src\app\vendors\add\add.component.ts" />
+    <None Remove="ClientApp\src\app\vendors\forms\forms.component.html" />
+    <None Remove="ClientApp\src\app\vendors\forms\forms.component.scss" />
+    <None Remove="ClientApp\src\app\vendors\forms\forms.component.spec.ts" />
+    <None Remove="ClientApp\src\app\vendors\forms\forms.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ClientApp\src\app\comics\" />
+    <Folder Include="ClientApp\src\app\ui-components\pipe-phone\" />
     <Folder Include="ClientApp\src\app\vendors\" />
   </ItemGroup>
 

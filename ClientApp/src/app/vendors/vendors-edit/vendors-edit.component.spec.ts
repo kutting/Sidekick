@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GridTitlebarComponent } from './grid-titlebar.component';
+import { VendorsEditComponent } from './vendors-edit.component';
 
-describe('GridTitlebarComponent', () => {
-  let component: GridTitlebarComponent;
-  let fixture: ComponentFixture<GridTitlebarComponent>;
+describe('VendorsEditComponent', () => {
+  let component: VendorsEditComponent;
+  let fixture: ComponentFixture<VendorsEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GridTitlebarComponent ]
+      declarations: [ VendorsEditComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GridTitlebarComponent);
+    fixture = TestBed.createComponent(VendorsEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

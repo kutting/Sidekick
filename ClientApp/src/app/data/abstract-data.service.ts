@@ -35,6 +35,7 @@ export abstract class AbstractDataService {
 			);
 	}
 
+	// Search for records that match the search parameters
 	protected getWithParams<T>(entrypoint: string, searchFilters: any): Observable<T> {
 		return this.http.get<T>(this.url(entrypoint), searchFilters ? { params: searchFilters } : {})
 			.pipe(
@@ -43,6 +44,7 @@ export abstract class AbstractDataService {
 			);
 	}
 
+	// insert a new record
 	protected post<T>(entrypoint: string, data: T): Observable<T> {
 		return this.http.post<T>(this.url(entrypoint), data, this.httpOptions)
 			.pipe(
@@ -50,6 +52,7 @@ export abstract class AbstractDataService {
 			);
 	}
 
+	// edit an existing record
 	protected put<T>(entrypoint: string, data: T): Observable<T> {
 		return this.http.put<T>(this.url(entrypoint), data, this.httpOptions)
 			.pipe(
@@ -57,6 +60,7 @@ export abstract class AbstractDataService {
 			);
 	}
 
+	// delete a record
 	protected delete(entrypoint: string, id: number): Observable<{}> {
 		return this.http.delete(this.url(entrypoint, id), this.httpOptions)
 			.pipe(
@@ -64,10 +68,12 @@ export abstract class AbstractDataService {
 			);
 	}
 
+	// convert an entrypoint into a complete URL
 	private url(entrypoint: string, id?: number): string {
 		return `${this.domain}${this.baseUrl}/${entrypoint}${id ? `/${id}` : ''}`;
 	}
 
+	// If an error occurs, report to the user
 	private handleError(error: HttpErrorResponse) {
 		let message = '';
 		if (error.error instanceof ErrorEvent) {

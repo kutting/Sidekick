@@ -5,7 +5,7 @@ import { AbstractDataService } from './abstract-data.service';
 
 // Controller-related Data Types
 export interface StateCode {
-	id: number;
+	stateCodeId: number;
 	abbreviation: string;
 	name: string;
 	description: string;
