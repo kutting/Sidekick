@@ -1,1 +1,119 @@
-<p>comics-search works!</p>
+<!--
+	FxLayout: https://codinglatte.com/posts/angular/angular-flex-layout-introduction/
+			  https://codinglatte.com/posts/angular/responsive-app-angular-flex-layout/
+-->
+<!-- Titlebar -->
+<app-titlebar title="Comics">
+	<app-button-with-icon buttonStyle="primary" icon="add" (click)="createComic()">Create Comic</app-button-with-icon>
+</app-titlebar>
+
+<!-- Filters -->
+<form [formGroup]="formGroup" style="background-color: #ededed; padding: 0.75rem" ngClass.xs="smalltext">
+	<!-- fxLayout="row|column|row-reverse|column-reverse|row-wrap"-->
+	<!-- fxLayoutAlign="start|center|end|space-around|space-between start|center|end|space-around|space-between" // mainAxis crossAxis-->
+	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between end" fxLayoutAlign.lt-sm="center start">
+		<div fxFlex="24">
+			<mat-form-field>
+				<input type="text" placeholder="Search by Title" matInput formControlName="searchTitle">
+			</mat-form-field>
+		</div>
+		<div fxFlex="24">
+			<mat-form-field>
+				<input type="text" placeholder="Search by Issue" matInput formControlName="searchIssue">
+			</mat-form-field>
+		</div>
+		<div fxFlex="24">
+			<mat-form-field [formGroup]="formGroup">
+				<input type="text" matInput placeholder="Search by Vendor"
+					   formControlName="searchVendor" [matAutocomplete]="auto">
+				<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+					<mat-option *ngFor="let item of filteredVendorNames | async" [value]="item" class="smalltext">
+						{{item}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+		</div>
+	</div>
+
+	<!--
+	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between end" fxLayoutAlign.lt-sm="center start">
+		<div fxFlex="24">
+			<mat-form-field>
+				<input type="text" placeholder="Search by Title" matInput formControlName="searchTitle">
+			</mat-form-field>
+		</div>
+		<div fxFlex="24">
+			<mat-form-field>
+				<input type="text" placeholder="Search by Issue" matInput formControlName="searchIssue">
+			</mat-form-field>
+		</div>
+		<div fxFlex="24">
+			<mat-form-field [formGroup]="formGroup">
+				<input type="text" matInput placeholder="Search by State"
+					   formControlName="searchState" [matAutocomplete]="auto">
+				<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+					<mat-option *ngFor="let item of filteredStateNames | async" [value]="item" class="smalltext">
+						{{item}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+		</div>
+		<div fxFlex="24">
+			<mat-form-field>
+				<input type="text" placeholder="Search by Phone" matInput formControlName="searchPhone">
+			</mat-form-field>
+		</div>
+	</div>
+		-->
+</form>
+
+<!-- spacer -->
+<hr />
+
+<!-- Grid -->
+<div class="datagrid">
+	<table mat-table matSort [dataSource]="dataSource">
+		<!--- Note that these columns can be defined in any order.
+	The actual rendered columns are set as a property on the row definition" -->
+
+		<ng-container matColumnDef="title">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+			<td mat-cell *matCellDef="let comic"> {{comic.title}} </td>
+		</ng-container>
+		<ng-container matColumnDef="issueNumber">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> Issue </th>
+			<td mat-cell *matCellDef="let comic"> {{comic.issueNumber}} </td>
+		</ng-container>
+		<ng-container matColumnDef="purchaseDate">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> Purchased </th>
+			<td mat-cell *matCellDef="let comic"> {{comic.purchaseDate | date}} </td>
+		</ng-container>
+		<ng-container matColumnDef="vendor">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> Vendor </th>
+			<td mat-cell *matCellDef="let comic"> {{comic.vendor ? comic.vendor.name : ''}} </td>
+		</ng-container>
+		<ng-container matColumnDef="condition">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> Condition </th>
+			<td mat-cell *matCellDef="let comic"> {{comic.condition ? comic.condition.name : ''}} </td>
+		</ng-container>
+		<ng-container matColumnDef="estimatedValue">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> Est. Value </th>
+			<td mat-cell *matCellDef="let comic" align="right"> {{comic.estimatedValue | currency}} </td>
+		</ng-container>
+
+		<!-- Actions Column -->
+		<ng-container matColumnDef="actions">
+			<th mat-header-cell *matHeaderCellDef style="text-align: right">Actions</th>
+			<td mat-cell *matCellDef="let gridItem" class="cell-actions">
+				<mat-icon (click)="delete(gridItem.comicId)" title="Delete" class="cell-action-delete">
+					delete
+				</mat-icon>
+				<mat-icon (click)="edit(gridItem.comicId)" title="Edit">edit</mat-icon>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+	</table>
+	<mat-paginator [pageSizeOptions]="[20, 50, 100, 300]" showFirstLastButtons></mat-paginator>
+</div>

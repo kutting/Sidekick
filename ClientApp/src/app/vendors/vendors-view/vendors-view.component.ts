@@ -55,28 +55,30 @@ export class VendorsViewComponent implements OnInit {
 		private readonly stateCodesService: StateCodesService,
 		private readonly vendorsService: VendorsService
 	) {
+		// Get the data for dropdowns
 		this.stateCodesService.allStateCodes().subscribe(result => {
 			this.stateCodes = result.sort((a, b) => a.name < b.name ? -1 : 1);
 		}, error => console.error(error));
 	}
 
 	ngOnInit() {
-		this.createForms();
+		// Generate the appropriate controls in the DOM
+		this.vendorForm = this.createFormGroup();
+
+		// If the view is being made in edit mode, load the existing vendor from the server, and display it.
 		if (this.vendorId) {
 			this.vendorsService.getVendor(this.vendorId).subscribe(
 				(vendor: Vendor) => {
 					console.log("Here is your vendor: %o and form %o", vendor, this.vendorForm);
-					// TODO populate into form
 					this.vendorForm.setValue(vendor);
 				}
 			);
 		}
 	}
 
-
-	createForms() {
-		// form validations
-		this.vendorForm = this.fb.group({
+	// Create form group for our form
+	createFormGroup(): FormGroup {
+		const controlsConfig = {
 			stateCode: [null],
 			comics: [null],
 			name: new FormControl('', Validators.compose([
@@ -105,21 +107,27 @@ export class VendorsViewComponent implements OnInit {
 				// pattern from: http://regexlib.com/Search.aspx?k=phone+number&c=-1&m=-1&ps=20
 				Validators.pattern(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)
 			])),
-		});
+		};
 
+		// If the view is being made in edit mode, add a (hidden) control for the record id.
+		// If this control is present for Create version of form, it makes the POST fail
 		if (this.vendorId) {
-			this.vendorForm.addControl('vendorId', new FormControl([]));
+			controlsConfig['vendorId'] = new FormControl([]);
 		}
+
+		return this.fb.group(controlsConfig);
 	}
 
-	// convenience getter for easy access to form fields
+	// Convenience getter for easy access to form fields
 	get formField() { return this.vendorForm.controls; }
 
+	// Let client view know when user hits the Submit button
 	onSubmit(event: MouseEvent, vendor: Vendor) {
 		event.stopPropagation();
 		this.submit.emit(vendor);
 	}
 
+	// If user cancels, return to previous page
 	onCancel() {
 		this.vendorForm.reset();
 		this.location.back();

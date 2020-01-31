@@ -16,11 +16,12 @@ import { VendorsService, Vendor } from '../../data/vendors.service';
 })
 export class VendorsSearchComponent implements OnInit {
 	formGroup: FormGroup;
-	stateCodeControl: FormControl;
 	dataSource: MatTableDataSource<Vendor>;
-	stateCodes: StateCode[];
-	filteredOptions: Observable<string[]>;
 	displayedColumns: string[] = ['name', 'city', 'state', 'phone', 'actions'];
+
+	stateCodeControl: FormControl;
+	stateCodes: StateCode[];
+	filteredStateNames: Observable<string[]>;
 
 	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 	@ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -45,13 +46,14 @@ export class VendorsSearchComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// Parse the filter configuration, and generate the appropriate controls in the DOM
+		// Generate the appropriate controls in the DOM
 		this.formGroup = this.createFormGroup();
 
-		// Hook changes to the form so that we update our grid data
+		// Hook changes to the filters so that we update our grid data
 		this.onFormChanges();
 
-		this.filteredOptions = this.stateCodeControl.valueChanges.pipe(
+		// Feed the state codes to the state autocomplete dropdown
+		this.filteredStateNames = this.stateCodeControl.valueChanges.pipe(
 			startWith(''),
 			map(value => this._filter(value))
 		);

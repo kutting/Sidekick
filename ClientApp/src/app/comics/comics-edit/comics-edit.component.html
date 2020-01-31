@@ -1,1 +1,3 @@
-<p>comics-edit works!</p>
+<app-titlebar title="Edit Comic">
+</app-titlebar>
+<app-comics-view [comicId]="comicId" (submit)="updateComic($event)"></app-comics-view>

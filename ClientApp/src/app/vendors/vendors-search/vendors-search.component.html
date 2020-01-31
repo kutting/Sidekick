@@ -28,7 +28,7 @@
 				<input type="text" matInput placeholder="Search by State"
 					   formControlName="searchState" [matAutocomplete]="auto">
 				<mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
-					<mat-option *ngFor="let item of filteredOptions | async" [value]="item" class="smalltext">
+					<mat-option *ngFor="let item of filteredStateNames | async" [value]="item" class="smalltext">
 						{{item}}
 					</mat-option>
 				</mat-autocomplete>
