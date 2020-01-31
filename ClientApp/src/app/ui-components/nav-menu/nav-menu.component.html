@@ -1,7 +1,7 @@
 <header>
 	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 		<div class="container">
-			<a class="navbar-brand" [routerLink]="['/']">Sidekick</a>
+			<a class="navbar-brand" [routerLink]="['/']" style="font-family: 'Comic Sans MS'">Sidekick</a>
 			<button class="navbar-toggler"
 					type="button"
 					data-toggle="collapse"
@@ -14,17 +14,17 @@
 			<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
 				 [ngClass]="{ show: isExpanded }">
 				<ul class="navbar-nav flex-grow">
-					<li class="nav-item"
-						[routerLinkActive]="['link-active']"
-						[routerLinkActiveOptions]="{ exact: true }">
-						<a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-					</li>
-					<li class="nav-item" [routerLinkActive]="['link-active']">
-						<a class="nav-link text-dark" [routerLink]="['/counter']">Counter</a>
-					</li>
-					<li class="nav-item" [routerLinkActive]="['link-active']">
-						<a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
-					</li>
+					<button mat-button style="outline: none" routerLink="/comics-search" [routerLinkActive]="['link-active']">Home</button>
+					<button mat-button [matMenuTriggerFor]="comics_menu" style="outline: none">Comics</button>
+					<mat-menu #comics_menu="matMenu">
+						<button mat-menu-item style="outline: none" routerLink="/comics-search" [routerLinkActive]="['link-active']">Search</button>
+						<button mat-menu-item style="outline: none" routerLink="/comic-add" [routerLinkActive]="['link-active']">Add</button>
+					</mat-menu>
+					<button mat-button [matMenuTriggerFor]="vendor_menu" style="outline: none">Vendors</button>
+					<mat-menu #vendor_menu="matMenu">
+						<button mat-menu-item style="outline: none" routerLink="/vendors-search" [routerLinkActive]="['link-active']">Search</button>
+						<button mat-menu-item style="outline: none" routerLink="/vendor-add" [routerLinkActive]="['link-active']">Add</button>
+					</mat-menu>
 				</ul>
 			</div>
 		</div>

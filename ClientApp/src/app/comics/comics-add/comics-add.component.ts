@@ -1,29 +1,28 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
-import { VendorsService, Vendor } from '../../data/vendors.service';
-
+import { ComicsService, Comic } from '../../data/comics.service';
 
 @Component({
-	selector: 'app-forms-page',
-	templateUrl: './vendors-add.component.html',
-	styleUrls: ['./vendors-add.component.scss'],
+	selector: 'app-comics-add',
+	templateUrl: './comics-add.component.html',
+	styleUrls: ['./comics-add.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
-export class VendorsAddComponent implements OnInit {
+export class ComicsAddComponent implements OnInit {
 
 	constructor(
 		private readonly location: Location,
-		private readonly vendorsService: VendorsService
+		private readonly comicsService: ComicsService
 	) { }
 
 	ngOnInit() {
 	}
 
-	// The user has created a new vendor in the view. Add it to the database
-	addVendor(vendor: Vendor) {
-		this.vendorsService.create(vendor)
+	// The user has created a new comic in the view. Add it to the database
+	addComic(comic: Comic) {
+		this.comicsService.create(comic)
 			.subscribe(
-				(data: Vendor) => {
+				(data: Comic) => {
 					console.log("Data returned from server is %o", data);
 				},
 				(error: any) => {
@@ -34,4 +33,5 @@ export class VendorsAddComponent implements OnInit {
 				}
 			);
 	}
+
 }

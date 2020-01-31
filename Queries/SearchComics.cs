@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Sidekick.Queries
 {
-	public class SearchVendors
+	public class SearchComics
 	{
-		public string SearchName { get; set; }
+		public string SearchTitle { get; set; }
 		public string SearchCity { get; set; }
 		public string SearchState { get; set; }
 		public string SearchPhone { get; set; }

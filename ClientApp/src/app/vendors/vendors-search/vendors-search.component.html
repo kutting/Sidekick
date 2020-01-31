@@ -12,115 +12,32 @@
 <form [formGroup]="formGroup" style="background-color: #ededed; padding: 0.75rem" ngClass.xs="smalltext">
 	<!-- fxLayout="row|column|row-reverse|column-reverse|row-wrap"-->
 	<!-- fxLayoutAlign="start|center|end|space-around|space-between start|center|end|space-around|space-between" // mainAxis crossAxis-->
-	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutAlign.lt-sm="center start" fxLayoutGap="10px">
-		<!-- fxFlex defaults to %; can be any unit of measure (e.g. px, vh, vw or %) -->
+	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between end" fxLayoutAlign.lt-sm="center start">
 		<div fxFlex="24">
 			<mat-form-field>
-				<mat-label>Search by Date Range</mat-label>
-				<mat-select [(value)]="selectedDateRange" formControlName="dateRangeFilter">
-					<mat-option>None</mat-option>
-					<mat-option value="option1">Last 30 Days</mat-option>
-					<mat-option value="option2">Last 60 Days</mat-option>
-					<mat-option value="option3">Last 90 Days</mat-option>
-				</mat-select>
-				<mat-hint align="start"><em>Overrides Begin & End Dates</em> </mat-hint>
-			</mat-form-field>
-			<button mat-button *ngIf="selectedDateRange" matSuffix mat-icon-button aria-label="Clear"
-					(click)="selectedDateRange=''" class="gr-clear-button">
-				<mat-icon>close</mat-icon>
-			</button>
-		</div>
-		<div fxFlex="24">
-			<mat-form-field>
-				<input matInput [matDatepicker]="beginDatepicker" placeholder="Search Begin Date"
-						formControlName="beginDateFilter">
-				<mat-datepicker-toggle matSuffix [for]="beginDatepicker"></mat-datepicker-toggle>
-				<mat-datepicker #beginDatepicker></mat-datepicker>
-			</mat-form-field>
-		</div>
-		<div fxFlex="24">
-			<mat-form-field>
-				<input matInput [matDatepicker]="endDatepicker" placeholder="Search End Date"
-						formControlName="endDateFilter">
-				<mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
-				<mat-datepicker #endDatepicker touchUi="false"></mat-datepicker>
-			</mat-form-field>
-		</div>
-		<div fxFlex="24">
-			<input matInput type="text" style="background-color: #fff; border: solid 0.5px #bbb">
-		</div>
-	</div>
-
-	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutAlign.lt-sm="center start"
-			fxLayoutGap="10px">
-		<!-- fxFlex defaults to %; can be any unit of measure (e.g. px, vh, vw or %) -->
-		<div fxFlex="32">
-			<mat-form-field>
-				<mat-label>Search by Event Type</mat-label>
-				<mat-select [(value)]="selectedEventType" formControlName="eventTypeFilter">
-					<mat-option>None</mat-option>
-					<mat-option value="optionHeavy">Challenges - Heavy Challenge</mat-option>
-					<mat-option value="optionExp12">Survival - Expedition 12</mat-option>
-					<mat-option value="optionSoln">Custom - Solutions</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<button mat-button *ngIf="selectedEventType" matSuffix mat-icon-button aria-label="Clear"
-					(click)="selectedEventType=''" class="gr-clear-button">
-				<mat-icon>close</mat-icon>
-			</button>
-		</div>
-		<div fxFlex="32">
-			<mat-form-field>
-				<mat-label>Search by Special Event Type</mat-label>
-				<mat-select [(value)]="selectedSpecialEventType" formControlName="specialEventTypeFilter">
-					<mat-option>None</mat-option>
-					<mat-option value="option1">1776</mat-option>
-					<mat-option value="option2">9/11</mat-option>
-					<mat-option value="option3">ABSOC</mat-option>
-					<mat-option value="option4">Canada Day</mat-option>
-					<mat-option value="option5">JFK Memorial</mat-option>
-				</mat-select>
-			</mat-form-field>
-			<button mat-button *ngIf="selectedSpecialEventType" matSuffix mat-icon-button aria-label="Clear"
-					(click)="selectedSpecialEventType=''" class="gr-clear-button">
-				<mat-icon>close</mat-icon>
-			</button>
-		</div>
-		<div fxFlex="32">
-			<app-slider labelSet="Exclude Special Events" labelUnset="Include Special Events" color="primary"
-						formControlName="includeSpecialEventsFilter">
-			</app-slider>
-		</div>
-	</div>
-
-	<!-- New Row -->
-	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="start center" fxLayoutAlign.lt-sm="center start">
-		<div fxFlex="32">
-			<mat-form-field class="example-full-width">
 				<input type="text" placeholder="Search by Name" matInput formControlName="searchName">
 			</mat-form-field>
 		</div>
-		<div fxFlex="32">
+		<div fxFlex="24">
 			<mat-form-field>
-				<mat-label>Search by Location Tier</mat-label>
-				<mat-select [(value)]="selectedLocationTier" formControlName="locationTierFilter">
-					<mat-option>None</mat-option>
-					<mat-option value="option1">Tier 1</mat-option>
-					<mat-option value="option2">Tier 2</mat-option>
-					<mat-option value="option3">Tier 3</mat-option>
-					<mat-option value="option4">Tier 4</mat-option>
-					<mat-option value="option5">Tier 5</mat-option>
-				</mat-select>
+				<input type="text" placeholder="Search by City" matInput formControlName="searchCity">
 			</mat-form-field>
-			<button mat-button *ngIf="selectedLocationTier" matSuffix mat-icon-button aria-label="Clear"
-					(click)="selectedLocationTier=''" class="gr-clear-button">
-				<mat-icon>close</mat-icon>
-			</button>
 		</div>
-		<div fxFlex="32">
-			<app-slider labelSet="Exclude Deleted Events" labelUnset="Include Deleted Events" color="warn"
-						formControlName="excludeDeletedEventsFilter">
-			</app-slider>
+		<div fxFlex="24">
+			<mat-form-field [formGroup]="formGroup">
+				<input type="text" matInput placeholder="Search by State"
+					   formControlName="searchState" [matAutocomplete]="auto">
+				<mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
+					<mat-option *ngFor="let item of filteredOptions | async" [value]="item" class="smalltext">
+						{{item}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+		</div>
+		<div fxFlex="24">
+			<mat-form-field>
+				<input type="text" placeholder="Search by Phone" matInput formControlName="searchPhone">
+			</mat-form-field>
 		</div>
 	</div>
 </form>

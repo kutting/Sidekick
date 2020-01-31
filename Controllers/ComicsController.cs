@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sidekick.Models;
+using Sidekick.Queries;
 
 namespace Sidekick.Controllers
 {
@@ -24,6 +25,37 @@ namespace Sidekick.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Comic>>> GetComics()
         {
+            return await _context.Comics.ToListAsync();
+        }
+
+        // Search vendors
+        // This method includes the vendor's statecode object in the delivered data
+        // GET: api/Vendors/withObjects?{query}
+        [HttpGet("withObjects")]
+        public async Task<ActionResult<IEnumerable<Comic>>> GetComicsWithStates([FromQuery] SearchComics query)
+        {
+            /*
+            // Left outer join Vendors and StateCode
+            var vendors = from v in _context.Vendors
+                          join sc in _context.StateCode on v.StateCodeId equals sc.StateCodeId into ab
+                          from sc in ab.DefaultIfEmpty()
+                          select new Vendor() { VendorId = v.VendorId, Name = v.Name, Address = v.Address, Address2 = v.Address2, City = v.City, StateCodeId = v.StateCodeId, ZipCode = v.ZipCode, EmailAddress = v.EmailAddress, PhoneNumber = v.PhoneNumber, WebsiteURL = v.WebsiteURL, StateCode = sc };
+            // Apply filters, if any
+            if (query != null)
+            {
+                vendors = from vendor in vendors
+                          where
+                            (string.IsNullOrEmpty(query.SearchName) || EF.Functions.Like(vendor.Name, "%" + query.SearchName + "%"))
+                            && (string.IsNullOrEmpty(query.SearchCity) || EF.Functions.Like(vendor.City, "%" + query.SearchCity + "%"))
+                            && (string.IsNullOrEmpty(query.SearchState) || (vendor.StateCode != null && EF.Functions.Like(vendor.StateCode.Name, "%" + query.SearchState + "%")))
+                            && (string.IsNullOrEmpty(query.SearchPhone) || EF.Functions.Like(vendor.PhoneNumber, "%" + query.SearchPhone + "%"))
+                          select vendor;
+            }
+
+            // return result
+            var result = vendors.AsNoTracking().ToListAsync();
+            return await result;
+            */
             return await _context.Comics.ToListAsync();
         }
 

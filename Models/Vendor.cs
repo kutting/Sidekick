@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sidekick.Models
 {
     public class Vendor
     {
         public long VendorId { get; set; }
+        [Required]
         [MaxLength(500)]
         public string Name { get; set; }
         [MaxLength(50)]
@@ -22,11 +24,13 @@ namespace Sidekick.Models
         public string ZipCode { get; set; }
         [MaxLength(250)]
         public string EmailAddress { get; set; }
+        public bool IsDeleted { get; set; } = false;    // By default, new records are marked Not Deleted
 
         // Foreign Key to StateCode
         public StateCode StateCode { get; set; }
 
+
         // Foreign Key from Comic
-        public Comic Comic { get; set; }
+        public ICollection<Comic> Comics { get; set; }
     }
 }

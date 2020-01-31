@@ -1,0 +1,17 @@
+form {
+	background-color: #ededed;
+	padding: 0.75rem;
+	font-size: 80%;
+	// Add spacing between rows
+	> div {
+		padding-bottom: 1rem;
+	}
+
+	.mat-form-field {
+		width: 100%;
+	}
+
+	.mat-input-element {
+		padding: 0.5rem;
+	}
+}

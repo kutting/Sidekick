@@ -11,6 +11,9 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 // import all the app page modules
+import { ComicsAddComponent } from './comics/comics-add/comics-add.component';
+import { ComicsEditComponent } from './comics/comics-edit/comics-edit.component';
+import { ComicsSearchComponent } from './comics/comics-search/comics-search.component';
 import { VendorsAddComponent } from './vendors/vendors-add/vendors-add.component';
 import { VendorsEditComponent } from './vendors/vendors-edit/vendors-edit.component';
 import { VendorsSearchComponent } from './vendors/vendors-search/vendors-search.component';
@@ -19,9 +22,12 @@ import { VendorsSearchComponent } from './vendors/vendors-search/vendors-search.
 // Define routes for all the app pages
 // In a larger app, these would be split into the modules that the pages belong to
 const routes: Routes = [
-	{ path: '', redirectTo: '/vendors-search', pathMatch: 'full' },
+	{ path: '', redirectTo: '/comics-search', pathMatch: 'full' },
 	{ path: 'counter', component: CounterComponent },
 	{ path: 'fetch-data', component: FetchDataComponent },
+	{ path: 'comics-search', component: ComicsSearchComponent },
+	{ path: 'comic-add', component: ComicsAddComponent },
+	{ path: 'comic-edit/:comicId', component: ComicsEditComponent },
 	{ path: 'vendors-search', component: VendorsSearchComponent },
 	{ path: 'vendor-add', component: VendorsAddComponent },
 	{ path: 'vendor-edit/:vendorId', component: VendorsEditComponent },

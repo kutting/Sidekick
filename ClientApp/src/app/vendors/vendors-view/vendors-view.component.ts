@@ -77,9 +77,8 @@ export class VendorsViewComponent implements OnInit {
 	createForms() {
 		// form validations
 		this.vendorForm = this.fb.group({
-			vendorId: [null],
 			stateCode: [null],
-			comic: [null],
+			comics: [null],
 			name: new FormControl('', Validators.compose([
 				Validators.required,
 				Validators.maxLength(500),
@@ -107,6 +106,10 @@ export class VendorsViewComponent implements OnInit {
 				Validators.pattern(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)
 			])),
 		});
+
+		if (this.vendorId) {
+			this.vendorForm.addControl('vendorId', new FormControl([]));
+		}
 	}
 
 	// convenience getter for easy access to form fields

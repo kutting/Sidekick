@@ -56,3 +56,33 @@ table.mat-table {
 		}
 	}
 }
+
+// Size and position the clear button on grid filters
+.grid-clear-button {
+	&.mat-icon-button {
+		left: 0;
+		top: -1px;
+		height: 16px;
+		width: 16px;
+		margin-left: -16px;
+
+		span.mat-button-wrapper {
+			position: absolute;
+			left: 0;
+			top: -1px;
+			height: 16px;
+			width: 16px;
+		}
+
+		mat-icon.material-icons {
+			font-size: 16px;
+			line-height: 1.125;
+			position: absolute;
+			left: 0;
+			top: -1px;
+			height: 16px;
+			width: 16px;
+			opacity: 0.25;
+		}
+	}
+}

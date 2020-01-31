@@ -1,4 +1,4 @@
-// Provide interface to data from VendorController
+// Provide interface to data from VendorsController
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AbstractDataService } from './abstract-data.service';
@@ -15,6 +15,7 @@ export interface Vendor {
 	stateId: number;
 	zipCode: string;
 	emailAddress: string;
+	isDeleted: boolean;
 }
 
 @Injectable({
@@ -40,6 +41,7 @@ export class VendorsService extends AbstractDataService {
 	// Create a new vendor
 	// POST: api/Vendors
 	public create(newVendor: Vendor): Observable<Vendor> {
+		newVendor.isDeleted = false;
 		return this.post<Vendor>('', newVendor);
 	}
 

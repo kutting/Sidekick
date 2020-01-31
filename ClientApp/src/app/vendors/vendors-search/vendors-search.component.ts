@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { MatPaginator } from '@angular/material/paginator';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { StateCodesService, StateCode } from '../../data/state-codes.service';
 import { VendorsService, Vendor } from '../../data/vendors.service';
 
 @Component({
@@ -13,15 +16,18 @@ import { VendorsService, Vendor } from '../../data/vendors.service';
 })
 export class VendorsSearchComponent implements OnInit {
 	formGroup: FormGroup;
+	stateCodeControl: FormControl;
 	dataSource: MatTableDataSource<Vendor>;
+	stateCodes: StateCode[];
+	filteredOptions: Observable<string[]>;
 	displayedColumns: string[] = ['name', 'city', 'state', 'phone', 'actions'];
-	private optionLabelToValueMap = {};		// key: filter property name => value: map (key: label => value: code)
 
 	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 	@ViewChild(MatSort, { static: true }) sort: MatSort;
 
 	constructor(
 		private router: Router,
+		private readonly stateCodesService: StateCodesService,
 		private readonly vendorsService: VendorsService
 	) {
 		// Get the data for the grid
@@ -31,6 +37,11 @@ export class VendorsSearchComponent implements OnInit {
 			this.dataSource.paginator = this.paginator;
 			this.dataSource.sort = this.sort;
 		});
+
+		// Get the data for the filters
+		this.stateCodesService.allStateCodes().subscribe(result => {
+			this.stateCodes = result.sort((a, b) => a.name < b.name ? -1 : 1);
+		}, error => console.error(error));
 	}
 
 	ngOnInit() {
@@ -39,20 +50,33 @@ export class VendorsSearchComponent implements OnInit {
 
 		// Hook changes to the form so that we update our grid data
 		this.onFormChanges();
+
+		this.filteredOptions = this.stateCodeControl.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filter(value))
+		);
+	}
+
+	// For auto-complete of StateCodes
+	private _filter(value: string): string[] {
+		if (!this.stateCodes) {
+			return [];
+		}
+
+		const filterValue = value.toLowerCase();
+
+		return this.stateCodes.filter(stateCode => stateCode.name.toLowerCase().indexOf(filterValue) === 0)
+			.map(sc => sc.name);
 	}
 
 	// Create form group for our filters
 	private createFormGroup(): FormGroup {
+		this.stateCodeControl = new FormControl('');
 		return new FormGroup({
 			searchName: new FormControl(''),
-			dateRangeFilter: new FormControl(''),
-			beginDateFilter: new FormControl(''),
-			endDateFilter: new FormControl(''),
-			eventTypeFilter: new FormControl(''),
-			specialEventTypeFilter: new FormControl('option1'),
-			includeSpecialEventsFilter: new FormControl({ value: false, disabled: false }),
-			locationTierFilter: new FormControl(''),
-			excludeDeletedEventsFilter: new FormControl({ value: true, disabled: false }),
+			searchCity: new FormControl(''),
+			searchState: this.stateCodeControl,
+			searchPhone: new FormControl(''),
 		});
 	}
 
@@ -69,10 +93,6 @@ export class VendorsSearchComponent implements OnInit {
 			// we receive an object where the keys are the property names from the FormGroup,
 			// and the values are the user's input.
 			Object.keys(val).map((key: string) => {
-				// For filters like dropdowns, that have multiple text strings that can be selected, convert the text to a value
-				if (val[key] && this.optionLabelToValueMap[key] !== undefined) {
-					val[key] = this.optionLabelToValueMap[key][val[key]];
-				}
 				// For dates, format to DOW MMM DD YYYY
 				if (typeof val[key] === 'object' && Object.prototype.toString.call(val[key]) === '[object Date]') {
 					val[key] = val[key].toDateString();
