@@ -5,7 +5,7 @@
 
 <!-- Titlebar -->
 <app-titlebar title="Vendors">
-	<app-button-with-icon buttonStyle="primary" icon="add" (click)="createVendor()">Create Vendor</app-button-with-icon>
+	<app-button-with-icon buttonStyle="primary" icon="add" (click)="gotoPage('/vendor-add')">Create Vendor</app-button-with-icon>
 </app-titlebar>
 
 <!-- Filters -->
@@ -75,7 +75,7 @@
 				<mat-icon (click)="delete(gridItem.vendorId)" title="Delete" class="cell-action-delete">
 					delete
 				</mat-icon>
-				<mat-icon (click)="edit(gridItem.vendorId)" title="Edit">edit</mat-icon>
+				<mat-icon (click)="gotoPage('/vendor-edit', gridItem.vendorId)" title="Edit">edit</mat-icon>
 			</td>
 		</ng-container>
 

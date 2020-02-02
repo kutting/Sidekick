@@ -39,13 +39,13 @@ export class ComicsService extends AbstractDataService {
 		return this.get<Comic>(comicId.toString());
 	}
 
-	// Create a new vendor
+	// Create a new comic
 	// POST: api/Comics
 	public create(newComic: Comic): Observable<Comic> {
 		return this.post<Comic>('', newComic);
 	}
 
-	// Update existing vendor
+	// Update existing comic
 	// PUT: api/Comics/5
 	public update(comic: Comic): Observable<Comic> {
 		return this.put<Comic>(comic.comicId.toString(), comic);

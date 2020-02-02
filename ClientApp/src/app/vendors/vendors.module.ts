@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { UIComponentsModule } from '../ui-components/ui-components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';                   // Flexbox
-import { PhonePipe } from '../ui-components/pipe-phone/pipe-phone.pipe';
+import { PhonePipe } from '../ui-components/pipes/pipe-phone.pipe';
 
 
 // Import all the pages in the module

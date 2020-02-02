@@ -55,7 +55,6 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\comics\" />
-    <Folder Include="ClientApp\src\app\ui-components\pipe-phone\" />
     <Folder Include="ClientApp\src\app\vendors\" />
   </ItemGroup>
 

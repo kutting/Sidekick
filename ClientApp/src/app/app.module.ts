@@ -9,20 +9,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UIComponentsModule } from './ui-components/ui-components.module';
 import { AppRoutingModule } from './app-routing.module';
 
-//import { PhonePipe } from './ui-components/pipe-phone/pipe-phone.pipe';
-
 // The app page components
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 
 // The app modules
 import { ComicsModule } from './comics/comics.module';
 import { VendorsModule } from './vendors/vendors.module';
+import { ComicvineModule } from './comicvine/comicvine.module';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		FetchDataComponent,
-		//PhonePipe,
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -30,6 +28,7 @@ import { VendorsModule } from './vendors/vendors.module';
 		FormsModule,
 		UIComponentsModule,
 		ComicsModule,
+		ComicvineModule,
 		VendorsModule,
 		BrowserAnimationsModule,
 		AppRoutingModule,		// Contains routes: MUST be after all the other feature modules for routing to work properly because it contains the wildcard route

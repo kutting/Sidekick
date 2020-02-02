@@ -13,7 +13,8 @@ export function getBaseUrl() {
 }
 
 const providers = [
-  { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
+	{ provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
+	{ provide: 'COMICVINE_API_KEY', useValue: '2d279cbc7181b2e850a24e5511a915044a1858da' }
 ];
 
 if (environment.production) {

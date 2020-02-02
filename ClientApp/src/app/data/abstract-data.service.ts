@@ -2,9 +2,10 @@
 /// There is one data service per WebAPI Controller class
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { map, catchError, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +21,14 @@ export abstract class AbstractDataService {
 
 	constructor(
 		private readonly http: HttpClient,
-		@Inject('BASE_URL') private readonly domain: string
+		@Inject('BASE_URL') protected readonly domain: string
 	) {
 		this.init();
 	}
 
 	abstract init(): void;
 
+	// Get all records at the specified entrypoint
 	protected get<T>(entrypoint: string): Observable<T> {
 		return this.http.get<T>(this.url(entrypoint))
 			.pipe(
@@ -38,6 +40,20 @@ export abstract class AbstractDataService {
 	// Search for records that match the search parameters
 	protected getWithParams<T>(entrypoint: string, searchFilters: any): Observable<T> {
 		return this.http.get<T>(this.url(entrypoint), searchFilters ? { params: searchFilters } : {})
+			.pipe(
+				retry(3), 							// retry a failed request up to 3 times
+				catchError(this.handleError)		// then handle the error
+			);
+	}
+
+	protected getJsonp<T>(entrypoint: string, searchFilters: object, resultsPage: number): Observable<T> {
+		let qs = "";
+		if (searchFilters)
+			qs += this.querystringFromObject(searchFilters);
+		if (resultsPage)
+			qs += "&offset=" + 100 * (resultsPage - 1);
+
+		return this.http.jsonp<T>(this.url(entrypoint) + qs, 'json_callback')
 			.pipe(
 				retry(3), 							// retry a failed request up to 3 times
 				catchError(this.handleError)		// then handle the error
@@ -69,8 +85,17 @@ export abstract class AbstractDataService {
 	}
 
 	// convert an entrypoint into a complete URL
-	private url(entrypoint: string, id?: number): string {
+	protected url(entrypoint: string, id?: number): string {
 		return `${this.domain}${this.baseUrl}/${entrypoint}${id ? `/${id}` : ''}`;
+	}
+
+	// convert an object into a querystring
+	private querystringFromObject(anObject: object): string {
+		if (!anObject)
+			return '';
+
+		const qsPairs = Object.keys(anObject).map(aKey => `${aKey}:${anObject[aKey]}`);
+		return "&filter=" + qsPairs.join(',');
 	}
 
 	// If an error occurs, report to the user

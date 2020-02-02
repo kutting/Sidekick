@@ -4,7 +4,7 @@
 -->
 <!-- Titlebar -->
 <app-titlebar title="Comics">
-	<app-button-with-icon buttonStyle="primary" icon="add" (click)="createComic()">Create Comic</app-button-with-icon>
+	<app-button-with-icon buttonStyle="primary" icon="add" (click)="gotoPage('/comic-add')">Create Comic</app-button-with-icon>
 </app-titlebar>
 
 <!-- Filters -->
@@ -12,17 +12,17 @@
 	<!-- fxLayout="row|column|row-reverse|column-reverse|row-wrap"-->
 	<!-- fxLayoutAlign="start|center|end|space-around|space-between start|center|end|space-around|space-between" // mainAxis crossAxis-->
 	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between end" fxLayoutAlign.lt-sm="center start">
-		<div fxFlex="24">
+		<div fxFlex="30">
 			<mat-form-field>
 				<input type="text" placeholder="Search by Title" matInput formControlName="searchTitle">
 			</mat-form-field>
 		</div>
-		<div fxFlex="24">
+		<div fxFlex="30">
 			<mat-form-field>
 				<input type="text" placeholder="Search by Issue" matInput formControlName="searchIssue">
 			</mat-form-field>
 		</div>
-		<div fxFlex="24">
+		<div fxFlex="30">
 			<mat-form-field [formGroup]="formGroup">
 				<input type="text" matInput placeholder="Search by Vendor"
 					   formControlName="searchVendor" [matAutocomplete]="auto">
@@ -35,36 +35,26 @@
 		</div>
 	</div>
 
-	<!--
 	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between end" fxLayoutAlign.lt-sm="center start">
-		<div fxFlex="24">
+		<div fxFlex="30">
 			<mat-form-field>
-				<input type="text" placeholder="Search by Title" matInput formControlName="searchTitle">
+				<input type="number" placeholder="Search by Min Value" matInput formControlName="searchEstimatedValueMin">
 			</mat-form-field>
 		</div>
-		<div fxFlex="24">
+		<div fxFlex="30">
 			<mat-form-field>
-				<input type="text" placeholder="Search by Issue" matInput formControlName="searchIssue">
+				<input type="number" placeholder="Search by Max Value" matInput formControlName="searchEstimatedValueMax">
 			</mat-form-field>
 		</div>
-		<div fxFlex="24">
-			<mat-form-field [formGroup]="formGroup">
-				<input type="text" matInput placeholder="Search by State"
-					   formControlName="searchState" [matAutocomplete]="auto">
-				<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-					<mat-option *ngFor="let item of filteredStateNames | async" [value]="item" class="smalltext">
-						{{item}}
-					</mat-option>
-				</mat-autocomplete>
-			</mat-form-field>
-		</div>
-		<div fxFlex="24">
+		<div fxFlex="30">
 			<mat-form-field>
-				<input type="text" placeholder="Search by Phone" matInput formControlName="searchPhone">
+				<mat-select placeholder="Search by Condition" formControlName="searchConditionCode">
+					<mat-option [value]="null">None</mat-option>
+					<mat-option *ngFor="let item of conditionCodes" [value]="item.name" class="gr-smalltext">{{item.name}}</mat-option>
+				</mat-select>
 			</mat-form-field>
 		</div>
 	</div>
-		-->
 </form>
 
 <!-- spacer -->
@@ -94,7 +84,7 @@
 		</ng-container>
 		<ng-container matColumnDef="condition">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header> Condition </th>
-			<td mat-cell *matCellDef="let comic"> {{comic.condition ? comic.condition.name : ''}} </td>
+			<td mat-cell *matCellDef="let comic"> {{comic.conditionCode ? comic.conditionCode.name : ''}} </td>
 		</ng-container>
 		<ng-container matColumnDef="estimatedValue">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header> Est. Value </th>
@@ -108,7 +98,7 @@
 				<mat-icon (click)="delete(gridItem.comicId)" title="Delete" class="cell-action-delete">
 					delete
 				</mat-icon>
-				<mat-icon (click)="edit(gridItem.comicId)" title="Edit">edit</mat-icon>
+				<mat-icon (click)="gotoPage('/comic-edit', gridItem.comicId)" title="Edit">edit</mat-icon>
 			</td>
 		</ng-container>
 

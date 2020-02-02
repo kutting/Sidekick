@@ -38,17 +38,17 @@ import { SliderComponent } from './slider.component';
 import { ButtonWithIconComponent } from './button-with-icon/button-with-icon.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { TitlebarComponent } from './titlebar/titlebar.component';
+import { GridPageBarComponent } from './grid-page-bar/grid-page-bar.component';
+import { FloorPipe } from '../ui-components/pipes/pipe-floor.pipe';
 
 @NgModule({
 	declarations: [
 		SliderComponent,
 		ButtonWithIconComponent,
-		/*
-		GridMessagebarComponent,
-		GridTitlebarComponent,
-		*/
 		NavMenuComponent,
 		TitlebarComponent,
+		GridPageBarComponent,
+		FloorPipe,
 	],
 	imports: [
 		CommonModule,
@@ -106,6 +106,7 @@ import { TitlebarComponent } from './titlebar/titlebar.component';
 		ButtonWithIconComponent,
 		NavMenuComponent,
 		TitlebarComponent,
+		GridPageBarComponent,
 	]
 })
 export class UIComponentsModule { }

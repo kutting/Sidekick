@@ -10,132 +10,139 @@ using Sidekick.Queries;
 
 namespace Sidekick.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ComicsController : ControllerBase
-    {
-        private readonly SidekickContext _context;
+	[Route("api/[controller]")]
+	[ApiController]
+	public class ComicsController : ControllerBase
+	{
+		private readonly SidekickContext _context;
 
-        public ComicsController(SidekickContext context)
-        {
-            _context = context;
-        }
+		public ComicsController(SidekickContext context)
+		{
+			_context = context;
+		}
 
-        // GET: api/Comics
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Comic>>> GetComics()
-        {
-            return await _context.Comics.ToListAsync();
-        }
+		// GET: api/Comics
+		[HttpGet]
+		public async Task<ActionResult<IEnumerable<Comic>>> GetComics()
+		{
+			return await _context.Comics.ToListAsync();
+		}
 
-        // Search vendors
-        // This method includes the vendor's statecode object in the delivered data
-        // GET: api/Vendors/withObjects?{query}
-        [HttpGet("withObjects")]
-        public async Task<ActionResult<IEnumerable<Comic>>> GetComicsWithStates([FromQuery] SearchComics query)
-        {
-            /*
-            // Left outer join Vendors and StateCode
-            var vendors = from v in _context.Vendors
-                          join sc in _context.StateCode on v.StateCodeId equals sc.StateCodeId into ab
-                          from sc in ab.DefaultIfEmpty()
-                          select new Vendor() { VendorId = v.VendorId, Name = v.Name, Address = v.Address, Address2 = v.Address2, City = v.City, StateCodeId = v.StateCodeId, ZipCode = v.ZipCode, EmailAddress = v.EmailAddress, PhoneNumber = v.PhoneNumber, WebsiteURL = v.WebsiteURL, StateCode = sc };
-            // Apply filters, if any
-            if (query != null)
-            {
-                vendors = from vendor in vendors
-                          where
-                            (string.IsNullOrEmpty(query.SearchName) || EF.Functions.Like(vendor.Name, "%" + query.SearchName + "%"))
-                            && (string.IsNullOrEmpty(query.SearchCity) || EF.Functions.Like(vendor.City, "%" + query.SearchCity + "%"))
-                            && (string.IsNullOrEmpty(query.SearchState) || (vendor.StateCode != null && EF.Functions.Like(vendor.StateCode.Name, "%" + query.SearchState + "%")))
-                            && (string.IsNullOrEmpty(query.SearchPhone) || EF.Functions.Like(vendor.PhoneNumber, "%" + query.SearchPhone + "%"))
-                          select vendor;
-            }
+		// Search vendors
+		// This method includes the vendor's statecode object in the delivered data
+		// See: https://stackoverflow.com/questions/3404975/left-outer-join-in-linq for more readable approach to doing outer joins
+		// GET: api/Vendors/withObjects?{query}
+		[HttpGet("withObjects")]
+		public async Task<ActionResult<IEnumerable<Comic>>> GetComicsWithObjects([FromQuery] SearchComics query)
+		{
+			// Left outer join Comics and StateCode
+			// Left outer join Comics to Vendor and ConditionCode
+			var comics = from c in _context.Comics
+						 from v in _context.Vendors.Where(vendor => c.VendorId == vendor.VendorId).DefaultIfEmpty()
+						 from conditionCode in _context.ConditionCodes.Where(cc => c.ConditionCodeId == cc.ConditionCodeId).DefaultIfEmpty()
+						 select new Comic() { ComicId = c.ComicId, Title = c.Title, IssueNumber = c.IssueNumber, Description = c.Description, PurchaseDate = c.PurchaseDate, VendorId = c.VendorId, MarvelId = c.MarvelId, MarvelLastViewed = c.MarvelLastViewed, ComicVineId = c.ComicVineId, ComicVineLastViewed = c.ComicVineLastViewed, EstimatedValue = c.EstimatedValue, ConditionCodeId = c.ConditionCodeId, Vendor = v, ConditionCode = conditionCode }
+						;
 
-            // return result
-            var result = vendors.AsNoTracking().ToListAsync();
-            return await result;
-            */
-            return await _context.Comics.ToListAsync();
-        }
+			// Apply filters, if any
+			if (query != null)
+			{
+				// TODO: figure out better way of pulling back values from dropdown set to "None"
+				if (query.SearchConditionCode == "null")
+					query.SearchConditionCode = null;
 
-        // GET: api/Comics/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Comic>> GetComic(long id)
-        {
-            var comic = await _context.Comics.FindAsync(id);
+				comics = from comic in comics
+						 where
+							(string.IsNullOrEmpty(query.SearchTitle) || EF.Functions.Like(comic.Title, "%" + query.SearchTitle + "%"))
+							&& (string.IsNullOrEmpty(query.SearchIssue) || EF.Functions.Like(comic.IssueNumber, "%" + query.SearchIssue + "%"))
+							&& (string.IsNullOrEmpty(query.SearchConditionCode) || (comic.ConditionCode != null && EF.Functions.Like(comic.ConditionCode.Name, "%" + query.SearchConditionCode + "%")))
+							&& (string.IsNullOrEmpty(query.SearchVendor) || (comic.Vendor != null && EF.Functions.Like(comic.Vendor.Name, "%" + query.SearchVendor + "%")))
+							&& (!query.SearchEstimatedValueMin.HasValue || (comic.EstimatedValue.HasValue && comic.EstimatedValue >= query.SearchEstimatedValueMin))
+							&& (!query.SearchEstimatedValueMax.HasValue || (comic.EstimatedValue.HasValue && comic.EstimatedValue <= query.SearchEstimatedValueMax))
+						 select comic;
+			}
 
-            if (comic == null)
-            {
-                return NotFound();
-            }
+			// return result
+			var result = comics.AsNoTracking().ToListAsync();
+			return await result;
+		}
 
-            return comic;
-        }
+		// GET: api/Comics/5
+		[HttpGet("{id}")]
+		public async Task<ActionResult<Comic>> GetComic(long id)
+		{
+			var comic = await _context.Comics.FindAsync(id);
 
-        // PUT: api/Comics/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutComic(long id, Comic comic)
-        {
-            if (id != comic.ComicId)
-            {
-                return BadRequest();
-            }
+			if (comic == null)
+			{
+				return NotFound();
+			}
 
-            _context.Entry(comic).State = EntityState.Modified;
+			return comic;
+		}
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ComicExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+		// PUT: api/Comics/5
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for
+		// more details see https://aka.ms/RazorPagesCRUD.
+		[HttpPut("{id}")]
+		public async Task<IActionResult> PutComic(long id, Comic comic)
+		{
+			if (id != comic.ComicId)
+			{
+				return BadRequest();
+			}
 
-            return NoContent();
-        }
+			_context.Entry(comic).State = EntityState.Modified;
 
-        // POST: api/Comics
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<Comic>> PostComic(Comic comic)
-        {
-            _context.Comics.Add(comic);
-            await _context.SaveChangesAsync();
+			try
+			{
+				await _context.SaveChangesAsync();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!ComicExists(id))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
 
-            return CreatedAtAction("GetComic", new { id = comic.ComicId }, comic);
-        }
+			return NoContent();
+		}
 
-        // DELETE: api/Comics/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Comic>> DeleteComic(long id)
-        {
-            var comic = await _context.Comics.FindAsync(id);
-            if (comic == null)
-            {
-                return NotFound();
-            }
+		// POST: api/Comics
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for
+		// more details see https://aka.ms/RazorPagesCRUD.
+		[HttpPost]
+		public async Task<ActionResult<Comic>> PostComic(Comic comic)
+		{
+			_context.Comics.Add(comic);
+			await _context.SaveChangesAsync();
 
-            _context.Comics.Remove(comic);
-            await _context.SaveChangesAsync();
+			return CreatedAtAction("GetComic", new { id = comic.ComicId }, comic);
+		}
 
-            return comic;
-        }
+		// DELETE: api/Comics/5
+		[HttpDelete("{id}")]
+		public async Task<ActionResult<Comic>> DeleteComic(long id)
+		{
+			var comic = await _context.Comics.FindAsync(id);
+			if (comic == null)
+			{
+				return NotFound();
+			}
 
-        private bool ComicExists(long id)
-        {
-            return _context.Comics.Any(e => e.ComicId == id);
-        }
-    }
+			_context.Comics.Remove(comic);
+			await _context.SaveChangesAsync();
+
+			return comic;
+		}
+
+		private bool ComicExists(long id)
+		{
+			return _context.Comics.Any(e => e.ComicId == id);
+		}
+	}
 }

@@ -38,7 +38,7 @@ export class ComicsViewComponent implements OnInit {
 	) {
 		// Get the data for dropdowns
 		this.conditionCodesService.allConditionCodes().subscribe(result => {
-			this.conditionCodes = result.sort((a, b) => a.name < b.name ? -1 : 1);
+			this.conditionCodes = result;
 		}, error => console.error(error));
 		this.vendorsService.allVendors(false).subscribe(result => {
 			this.vendors = result.sort((a, b) => a.name < b.name ? -1 : 1);

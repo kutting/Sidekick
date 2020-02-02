@@ -1,0 +1,42 @@
+div.pagebar {
+	height: 2em;
+	min-height: 2em;
+	background-color: #ddd;
+	border: 1px solid #ededed;
+
+	.response-error {
+		height: 1.0em;
+		min-height: 2.0em;
+		margin-top: 0.5em;
+		margin-left: 1em;
+		background-color: #f2dede;
+		color: #a94442;
+		font-style: italic;
+	}
+
+	.response-page-info {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 1.0em;
+		min-height: 2em;
+		font-size: 80%;
+
+		.pageinfo, .rowinfo {
+			padding: 0 1.5rem;
+
+			input {
+				width: 3rem;
+			}
+		}
+
+		.waiting {
+			padding: 0 1.5rem;
+			font-style: italic;
+		}
+	}
+
+	.hide {
+		display: none;
+	}
+}

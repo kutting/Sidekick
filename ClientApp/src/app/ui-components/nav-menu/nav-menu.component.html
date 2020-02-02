@@ -25,6 +25,12 @@
 						<button mat-menu-item style="outline: none" routerLink="/vendors-search" [routerLinkActive]="['link-active']">Search</button>
 						<button mat-menu-item style="outline: none" routerLink="/vendor-add" [routerLinkActive]="['link-active']">Add</button>
 					</mat-menu>
+					<button mat-button [matMenuTriggerFor]="comics_menu" style="outline: none">Comic Vine</button>
+					<mat-menu #comics_menu="matMenu">
+						<button mat-menu-item style="outline: none" routerLink="/comicvine-series" [routerLinkActive]="['link-active']">Series</button>
+						<button mat-menu-item style="outline: none" routerLink="/comicvine-issues" [routerLinkActive]="['link-active']">Issues</button>
+						<button mat-menu-item style="outline: none" routerLink="/comicvine-publishers" [routerLinkActive]="['link-active']">Publishers</button>
+					</mat-menu>
 				</ul>
 			</div>
 		</div>

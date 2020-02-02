@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Sidekick.Queries
+﻿namespace Sidekick.Queries
 {
 	public class SearchComics
 	{
 		public string SearchTitle { get; set; }
-		public string SearchCity { get; set; }
-		public string SearchState { get; set; }
-		public string SearchPhone { get; set; }
+		public string SearchIssue { get; set; }
+		public string SearchConditionCode { get; set; }
+		public string SearchVendor { get; set; }
+		public decimal? SearchEstimatedValueMin { get; set; }
+		public decimal? SearchEstimatedValueMax { get; set; }
 	}
 }

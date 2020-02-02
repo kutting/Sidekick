@@ -1,0 +1,16 @@
+<div class="pagebar">
+	<div class="response-error" [ngClass]="{'hide':!cvResponse || cvResponse.status_code === 1}">{{cvResponse ? cvResponse.error : 'Danger! This alert box could indicate a dangerous or potentially negative action.'}}</div>
+	<div class="response-page-info" [ngClass]="{'hide':!cvResponse || cvResponse.status_code !== 1}">
+		<div class="pageinfo">
+			page <input mat-input type="number" min="1" [value]="((cvResponse ? cvResponse.offset / cvResponse.limit : 0) | floor) + 1" (change)="pageChanged($event)" />
+			/ {{totalPages}}
+		</div>
+		<div class="rowinfo" [ngClass]="{'hide': isWaitingForNewPage}">
+			rows {{cvResponse ? cvResponse.offset : 0}} - {{cvResponse ? cvResponse.offset + cvResponse.number_of_page_results : 0}}
+			/ {{cvResponse ? cvResponse.number_of_total_results : 0}}
+		</div>
+		<div class="waiting" [ngClass]="{'hide': !isWaitingForNewPage}">
+			waiting...
+		</div>
+	</div>
+</div>

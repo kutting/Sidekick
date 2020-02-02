@@ -17,6 +17,9 @@ import { ComicsSearchComponent } from './comics/comics-search/comics-search.comp
 import { VendorsAddComponent } from './vendors/vendors-add/vendors-add.component';
 import { VendorsEditComponent } from './vendors/vendors-edit/vendors-edit.component';
 import { VendorsSearchComponent } from './vendors/vendors-search/vendors-search.component';
+import { SearchSeriesComponent } from './comicvine/search-series/search-series.component';
+import { SearchIssuesComponent } from './comicvine/search-issues/search-issues.component';
+import { SearchPublishersComponent } from './comicvine/search-publishers/search-publishers.component';
 
 
 // Define routes for all the app pages
@@ -31,6 +34,9 @@ const routes: Routes = [
 	{ path: 'vendors-search', component: VendorsSearchComponent },
 	{ path: 'vendor-add', component: VendorsAddComponent },
 	{ path: 'vendor-edit/:vendorId', component: VendorsEditComponent },
+	{ path: 'comicvine-series', component: SearchSeriesComponent },
+	{ path: 'comicvine-issues', component: SearchIssuesComponent },
+	{ path: 'comicvine-publishers', component: SearchPublishersComponent },
 	{ path: '**', component: PageNotFoundComponent }
 ];
 
