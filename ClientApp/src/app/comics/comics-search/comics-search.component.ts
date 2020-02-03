@@ -33,7 +33,7 @@ export class ComicsSearchComponent extends AbstractSearchComponent<Comic> implem
 		private readonly vendorsService: VendorsService
 	) {
 		// Give superclass the ids of the displayed columns of the grid
-		super(router, ['title', 'issueNumber', 'purchaseDate', 'vendor', 'condition', 'estimatedValue', 'actions']);
+		super(router, ['title', 'issueNumber', 'purchaseDate', 'vendor.name', 'conditionCode.name', 'estimatedValue', 'actions']);
 	}
 
 	ngOnInit() {

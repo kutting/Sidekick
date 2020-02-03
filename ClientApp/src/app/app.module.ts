@@ -9,9 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UIComponentsModule } from './ui-components/ui-components.module';
 import { AppRoutingModule } from './app-routing.module';
 
-// The app page components
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-
 // The app modules
 import { ComicsModule } from './comics/comics.module';
 import { VendorsModule } from './vendors/vendors.module';
@@ -20,7 +17,6 @@ import { ComicvineModule } from './comicvine/comicvine.module';
 @NgModule({
 	declarations: [
 		AppComponent,
-		FetchDataComponent,
 	],
 	imports: [
 		BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

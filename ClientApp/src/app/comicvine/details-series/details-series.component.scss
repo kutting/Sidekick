@@ -1,0 +1,47 @@
+.details-form {
+	background-color: #ededed;
+	padding: 0.75rem;
+	margin-bottom: 3rem;
+	font-size: 80%;
+	// Add spacing between rows
+	> div {
+		padding-bottom: 1rem;
+	}
+
+	.field {
+		.label {
+			font-size: 70%;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		img {
+			max-height: 64px !important;
+		}
+
+		h1 {
+			font-size: 1.5rem
+		}
+
+		h2 {
+			font-size: 1.25rem
+		}
+
+		h3 {
+			font-size: 1rem
+		}
+
+		h4 {
+			font-size: 0.85rem
+		}
+	}
+
+	div.datagrid {
+		margin-bottom: 2rem;
+		width: 100%;
+
+		> table {
+			width: 100%;
+		}
+	}
+}

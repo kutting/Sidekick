@@ -11,6 +11,7 @@ export interface ICVSeries {
 	date_last_updated: Date;			//	Date the series was last updated on Comic Vine.
 	deck: string;						//	Brief summary of the series.
 	description: string;				//	Description of the series.
+	episodes?: ICVEpisode[];			//	List of each episode of series.
 	first_episode: ICVEpisode;			//	The first episode in this series.
 	id: number;							//	Unique ID of the series.
 	image: ICVImage;					//	Main image of the series.

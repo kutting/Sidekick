@@ -69,7 +69,6 @@ export class VendorsViewComponent implements OnInit {
 		if (this.vendorId) {
 			this.vendorsService.getVendor(this.vendorId).subscribe(
 				(vendor: Vendor) => {
-					console.log("Here is your vendor: %o and form %o", vendor, this.vendorForm);
 					this.vendorForm.setValue(vendor);
 				}
 			);
@@ -112,7 +111,8 @@ export class VendorsViewComponent implements OnInit {
 		// If the view is being made in edit mode, add a (hidden) control for the record id.
 		// If this control is present for Create version of form, it makes the POST fail
 		if (this.vendorId) {
-			controlsConfig['vendorId'] = new FormControl([]);
+			controlsConfig['vendorId'] = [];
+			controlsConfig['isDeleted'] = [];
 		}
 
 		return this.fb.group(controlsConfig);

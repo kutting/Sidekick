@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sidekick.Models;
 
 namespace Sidekick.Models
 {

@@ -78,11 +78,11 @@
 			<th mat-header-cell *matHeaderCellDef mat-sort-header> Purchased </th>
 			<td mat-cell *matCellDef="let comic"> {{comic.purchaseDate | date}} </td>
 		</ng-container>
-		<ng-container matColumnDef="vendor">
+		<ng-container matColumnDef="vendor.name">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header> Vendor </th>
 			<td mat-cell *matCellDef="let comic"> {{comic.vendor ? comic.vendor.name : ''}} </td>
 		</ng-container>
-		<ng-container matColumnDef="condition">
+		<ng-container matColumnDef="conditionCode.name">
 			<th mat-header-cell *matHeaderCellDef mat-sort-header> Condition </th>
 			<td mat-cell *matCellDef="let comic"> {{comic.conditionCode ? comic.conditionCode.name : ''}} </td>
 		</ng-container>

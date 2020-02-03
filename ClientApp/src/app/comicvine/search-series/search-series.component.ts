@@ -24,7 +24,7 @@ export class SearchSeriesComponent extends AbstractSearchComponent<ICVSeries> im
 		router: Router,
 		private readonly comicvine: ComicvineService
 	) {
-		super(router, ['thumb', 'name', 'episodes', 'publisher', 'actions']);
+		super(router, ['thumb', 'name', 'count_of_episodes', 'publisher.name', 'actions']);
 	}
 
 	ngOnInit() {

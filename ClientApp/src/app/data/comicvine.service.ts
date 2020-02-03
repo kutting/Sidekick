@@ -48,8 +48,8 @@ export class ComicvineService extends AbstractDataService {
 
 	// Get a specific comic by Id
 	// GET: api/series
-	public getComic(comicId: number): Observable<ICVResponse<ICVSeries>> {
-		return this.getJsonp<ICVResponse<ICVSeries>>('series', { id: comicId });
+	public getSeries(seriesId: number): Observable<ICVResponse<ICVSeries>> {
+		return this.getJsonp<ICVResponse<ICVSeries>>(`series/${seriesId}`);
 	}
 
 	// OVERRIDE default way of converting an entrypoint into a complete URL, to generate querystring format

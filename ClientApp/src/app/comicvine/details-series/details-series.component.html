@@ -1,0 +1,80 @@
+<app-titlebar title="ComicVine Series Details">
+</app-titlebar>
+
+<div class="details-form">
+	<!-- fxLayout="row|column|row-reverse|column-reverse|row-wrap"-->
+	<!-- fxLayoutAlign="start|center|end|space-around|space-between start|center|end|space-around|space-between" // mainAxis crossAxis-->
+	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between center" fxLayoutAlign.lt-sm="center start">
+		<!-- fxFlex defaults to %; can be any unit of measure (e.g. px, vh, vw or %) -->
+		<div class="field" fxFlex="80">
+			<div class="label">Name</div>
+			{{series.name}}
+		</div>
+		<div class="field" fxFlex="18">
+			<div class="label">Aliases</div>
+			<div [innerHTML]="series.aliases | newlineToBreak"></div>
+		</div>
+	</div>
+
+	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between center" fxLayoutAlign.lt-sm="center start">
+		<!-- fxFlex defaults to %; can be any unit of measure (e.g. px, vh, vw or %) -->
+		<div class="field" fxFlex="60">
+			<div class="label">Publisher</div>
+			{{series.publisher ? series.publisher.name : ''}}
+		</div>
+		<div class="field" fxFlex="18">
+			<div class="label">Start Year</div>
+			<div [innerHTML]="series.start_year"></div>
+		</div>
+		<div class="field" fxFlex="18">
+			<div class="label">Episodes</div>
+			<div [innerHTML]="series.count_of_episodes"></div>
+		</div>
+	</div>
+
+	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between center" fxLayoutAlign.lt-sm="center start">
+		<div class="field" fxFlex="100">
+			<div class="label">Description</div>
+			<div [innerHTML]="series.description"></div>
+		</div>
+	</div>
+
+	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between center" fxLayoutAlign.lt-sm="center start">
+		<div class="field" fxFlex="100">
+			<div class="label">Episodes</div>
+			<div class="datagrid">
+				<table mat-table matSort [dataSource]="dataSource">
+					<!--- Note that these columns can be defined in any order.
+					The actual rendered columns are set as a property on the row definition" -->
+
+					<ng-container matColumnDef="number">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header> Number </th>
+						<td mat-cell *matCellDef="let episode"> {{episode.episode_number}} </td>
+					</ng-container>
+					<ng-container matColumnDef="name">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+						<td mat-cell *matCellDef="let episode"> {{episode.name}} </td>
+					</ng-container>
+
+					<!-- Actions Column -->
+					<ng-container matColumnDef="actions">
+						<th mat-header-cell *matHeaderCellDef style="text-align: right">Actions</th>
+						<td mat-cell *matCellDef="let gridItem" class="cell-actions">
+							<mat-icon (click)="gotoPage('/comicvine-episodes-details', gridItem.id)" title="Get Details">details</mat-icon>
+						</td>
+					</ng-container>
+
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+				</table>
+				<mat-paginator [pageSizeOptions]="[20, 50, 100, 300]" showFirstLastButtons></mat-paginator>
+			</div>
+		</div>
+	</div>
+
+	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="end center" fxLayoutAlign.lt-sm="center start">
+		<button class="btn btn-secondary" type="reset" (click)="onCancel($event)">
+			Back
+		</button>
+	</div>
+</div>

@@ -6,8 +6,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Import all the app page components
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 // import all the app page modules
@@ -20,14 +18,13 @@ import { VendorsSearchComponent } from './vendors/vendors-search/vendors-search.
 import { SearchSeriesComponent } from './comicvine/search-series/search-series.component';
 import { SearchIssuesComponent } from './comicvine/search-issues/search-issues.component';
 import { SearchPublishersComponent } from './comicvine/search-publishers/search-publishers.component';
+import { DetailsSeriesComponent } from './comicvine/details-series/details-series.component';
 
 
 // Define routes for all the app pages
 // In a larger app, these would be split into the modules that the pages belong to
 const routes: Routes = [
 	{ path: '', redirectTo: '/comics-search', pathMatch: 'full' },
-	{ path: 'counter', component: CounterComponent },
-	{ path: 'fetch-data', component: FetchDataComponent },
 	{ path: 'comics-search', component: ComicsSearchComponent },
 	{ path: 'comic-add', component: ComicsAddComponent },
 	{ path: 'comic-edit/:comicId', component: ComicsEditComponent },
@@ -37,13 +34,13 @@ const routes: Routes = [
 	{ path: 'comicvine-series', component: SearchSeriesComponent },
 	{ path: 'comicvine-issues', component: SearchIssuesComponent },
 	{ path: 'comicvine-publishers', component: SearchPublishersComponent },
+	{ path: 'comicvine-series-details/:seriesId', component: DetailsSeriesComponent },
 	{ path: '**', component: PageNotFoundComponent }
 ];
 
 // Set enableTracing to true to enable debugging output in the console that shows you how each route is resolved
 @NgModule({
 	declarations: [
-		CounterComponent,
 		PageNotFoundComponent
 	],
 	imports: [RouterModule.forRoot(routes, { enableTracing: false })],

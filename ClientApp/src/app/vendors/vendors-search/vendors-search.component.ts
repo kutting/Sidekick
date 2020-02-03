@@ -27,7 +27,7 @@ export class VendorsSearchComponent extends AbstractSearchComponent<Vendor> impl
 		private readonly stateCodesService: StateCodesService,
 		private readonly vendorsService: VendorsService
 	) {
-		super(router, ['name', 'city', 'state', 'phone', 'actions']);
+		super(router, ['name', 'city', 'stateCode.abbreviation', 'phoneNumber', 'actions']);
 	}
 
 	ngOnInit() {
@@ -43,7 +43,7 @@ export class VendorsSearchComponent extends AbstractSearchComponent<Vendor> impl
 	// Get the data for the grid from the server, optionally filtered by specified values
 	getGridData(searchFilters: any): void {
 		this.vendorsService.allVendors(true, searchFilters).subscribe(data => {
-			data = data.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+			//data = data.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
 			this.setGridData(data, this.paginator, this.sort);
 		});
 	}

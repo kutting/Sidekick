@@ -49,11 +49,10 @@ export class ComicsViewComponent implements OnInit {
 		// Generate the appropriate controls in the DOM
 		this.comicForm = this.createFormGroup();
 
+		// If the view is being made in edit mode, load the existing comic from the server, and display it.
 		if (this.comicId) {
 			this.comicsService.getComic(this.comicId).subscribe(
 				(comic: Comic) => {
-					console.log("Here is your comic: %o and form %o", comic, this.comicForm);
-					// TODO populate into form
 					this.comicForm.setValue(comic);
 				}
 			);
@@ -78,6 +77,8 @@ export class ComicsViewComponent implements OnInit {
 		// If this control is present for Create version of form, it makes the POST fail
 		if (this.comicId) {
 			controlsConfig['comicId'] = new FormControl([]);
+			controlsConfig['vendor'] = [null];
+			controlsConfig['conditionCode'] = [null];
 			controlsConfig['marvelId'] = [null];
 			controlsConfig['marvelLastViewed'] = [null];
 			controlsConfig['comicVineId'] = [null];

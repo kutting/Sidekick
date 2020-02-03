@@ -51,61 +51,6 @@
 		</mat-form-field>
 	</div>
 
-	<!--
-	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between center" fxLayoutAlign.lt-sm="center start" fxLayoutGap="10px">
-		<mat-form-field fxFlex="100">
-			<input matInput placeholder="Address 2" formControlName="address2">
-			<mat-error *ngFor="let validation of validation_messages.address2">
-				<mat-error class="error-message" *ngIf="formField.address2.hasError(validation.type) && (formField.address2.dirty || formField.address2.touched)">{{validation.message}}</mat-error>
-			</mat-error>
-		</mat-form-field>
-	</div>
-
-	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between baseline" fxLayoutAlign.lt-sm="center start">
-		<mat-form-field fxFlex="32">
-			<input matInput placeholder="City" formControlName="city">
-			<mat-error *ngFor="let validation of validation_messages.city">
-				<mat-error class="error-message" *ngIf="formField.city.hasError(validation.type) && (formField.city.dirty || formField.city.touched)">{{validation.message}}</mat-error>
-			</mat-error>
-		</mat-form-field>
-		<mat-form-field fxFlex="32">
-			<mat-select placeholder="State" formControlName="stateCodeId">
-				<mat-option>None</mat-option>
-				<mat-option *ngFor="let stateCode of stateCodes" [value]="stateCode.stateCodeId">
-					{{stateCode.name}}
-				</mat-option>
-			</mat-select>
-		</mat-form-field>
-		<mat-form-field fxFlex="32">
-			<input matInput placeholder="Zip Code" formControlName="zipCode">
-			<mat-error *ngFor="let validation of validation_messages.zipCode">
-				<mat-error class="error-message" *ngIf="formField.zipCode.hasError(validation.type) && (formField.zipCode.dirty || formField.zipCode.touched)">{{validation.message}}</mat-error>
-			</mat-error>
-		</mat-form-field>
-	</div>
-
-	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between baseline" fxLayoutAlign.lt-sm="center start">
-		<mat-form-field fxFlex="32">
-			<input matInput placeholder="Phone" formControlName="phoneNumber">
-			<mat-error *ngFor="let validation of validation_messages.phoneNumber">
-				<mat-error class="error-message" *ngIf="formField.phoneNumber.hasError(validation.type) && (formField.phoneNumber.dirty || formField.phoneNumber.touched)">{{validation.message}}</mat-error>
-			</mat-error>
-		</mat-form-field>
-		<mat-form-field fxFlex="32">
-			<input matInput placeholder="Website" formControlName="websiteURL">
-			<mat-error *ngFor="let validation of validation_messages.websiteURL">
-				<mat-error class="error-message" *ngIf="formField.websiteURL.hasError(validation.type) && (formField.websiteURL.dirty || formField.websiteURL.touched)">{{validation.message}}</mat-error>
-			</mat-error>
-		</mat-form-field>
-		<mat-form-field fxFlex="32">
-			<input matInput placeholder="Email Address" formControlName="emailAddress">
-			<mat-error *ngFor="let validation of validation_messages.emailAddress">
-				<mat-error class="error-message" *ngIf="formField.emailAddress.hasError(validation.type) && (formField.emailAddress.dirty || formField.emailAddress.touched)">{{validation.message}}</mat-error>
-			</mat-error>
-		</mat-form-field>
-	</div>
-		-->
-
 	<div flex fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between baseline" fxLayoutAlign.lt-sm="center start">
 		<mat-form-field fxFlex="100">
 			<textarea matInput placeholder="Description" formControlName="description" rows="8" style="background-color: rgba(255,255,255,0.25);border: solid 0.5px #ccc;padding:0.5rem"></textarea>

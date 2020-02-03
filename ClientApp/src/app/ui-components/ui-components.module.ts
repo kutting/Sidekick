@@ -39,7 +39,7 @@ import { ButtonWithIconComponent } from './button-with-icon/button-with-icon.com
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { TitlebarComponent } from './titlebar/titlebar.component';
 import { GridPageBarComponent } from './grid-page-bar/grid-page-bar.component';
-import { FloorPipe } from '../ui-components/pipes/pipe-floor.pipe';
+import { FloorPipe } from '../ui-components/pipes/floor.pipe';
 
 @NgModule({
 	declarations: [

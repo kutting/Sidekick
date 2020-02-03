@@ -1,7 +1,9 @@
 <header>
 	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 		<div class="container">
-			<a class="navbar-brand" [routerLink]="['/']" style="font-family: 'Comic Sans MS'">Sidekick</a>
+			<a class="navbar-brand" [routerLink]="['/']">
+				<img src="assets/images/sidekick v2.png" alt="Sidekick!"/>
+			</a>
 			<button class="navbar-toggler"
 					type="button"
 					data-toggle="collapse"
@@ -25,8 +27,8 @@
 						<button mat-menu-item style="outline: none" routerLink="/vendors-search" [routerLinkActive]="['link-active']">Search</button>
 						<button mat-menu-item style="outline: none" routerLink="/vendor-add" [routerLinkActive]="['link-active']">Add</button>
 					</mat-menu>
-					<button mat-button [matMenuTriggerFor]="comics_menu" style="outline: none">Comic Vine</button>
-					<mat-menu #comics_menu="matMenu">
+					<button mat-button [matMenuTriggerFor]="comicvine_menu" style="outline: none">Comic Vine</button>
+					<mat-menu #comicvine_menu="matMenu">
 						<button mat-menu-item style="outline: none" routerLink="/comicvine-series" [routerLinkActive]="['link-active']">Series</button>
 						<button mat-menu-item style="outline: none" routerLink="/comicvine-issues" [routerLinkActive]="['link-active']">Issues</button>
 						<button mat-menu-item style="outline: none" routerLink="/comicvine-publishers" [routerLinkActive]="['link-active']">Publishers</button>

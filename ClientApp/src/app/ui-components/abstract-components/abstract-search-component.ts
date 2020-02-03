@@ -41,9 +41,17 @@ export abstract class AbstractSearchComponent<T> implements OnInit {
 	}
 
 	// Set the data for the grid
-	// paginator & sort only need to be provided the first time, when the grid is initially loaded
+	// Use a custom sortingDataAccessor, to handle columns that rely on nested properties
+	// See: https://stackoverflow.com/questions/48891174/angular-material-2-datatable-sorting-with-nested-objects
 	protected setGridData(data: T[], paginator?: MatPaginator, sort?: MatSort): void {
 		this.dataSource = new MatTableDataSource<T>(data);
+
+		this.dataSource.sortingDataAccessor = (item: T, property: string) => {
+			if (property.includes('.'))
+				return property.split('.').reduce((obj, key:string) => obj ? obj[key] : null, item)
+			return item ? item[property] : null;
+		};
+
 		if (paginator) {
 			this.dataSource.paginator = paginator;
 		}

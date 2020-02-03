@@ -46,7 +46,7 @@ export abstract class AbstractDataService {
 			);
 	}
 
-	protected getJsonp<T>(entrypoint: string, searchFilters: object, resultsPage: number): Observable<T> {
+	protected getJsonp<T>(entrypoint: string, searchFilters: object = null, resultsPage: number = null): Observable<T> {
 		let qs = "";
 		if (searchFilters)
 			qs += this.querystringFromObject(searchFilters);

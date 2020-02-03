@@ -7,11 +7,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';                   // Fl
 import { SearchSeriesComponent } from './search-series/search-series.component';
 import { SearchIssuesComponent } from './search-issues/search-issues.component';
 import { SearchPublishersComponent } from './search-publishers/search-publishers.component';
+import { DetailsSeriesComponent } from './details-series/details-series.component';
+import { NewlineToBreakPipe } from '../ui-components/pipes/newline-to-break.pipe';
 
 
 
 @NgModule({
-	declarations: [SearchSeriesComponent, SearchIssuesComponent, SearchPublishersComponent],
+	declarations: [
+		SearchSeriesComponent, SearchIssuesComponent, SearchPublishersComponent, DetailsSeriesComponent,
+		NewlineToBreakPipe,
+	],
   imports: [
 	  CommonModule,
 	  HttpClientJsonpModule, HttpClientModule,
